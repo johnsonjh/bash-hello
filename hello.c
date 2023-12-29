@@ -1,3 +1,8 @@
+/*
+ * hello -- hello world
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
 #include "bash/config.h"
 
 #if defined(HAVE_UNISTD_H)
