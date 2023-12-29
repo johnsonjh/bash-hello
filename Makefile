@@ -14,7 +14,7 @@ myprint.so: myprint.c
 .PHONY: test
 test: hello.so myprint.so
 	@bash -xc 'enable -f ./hello.so hello && builtin hello'
-	@bash -xc 'enable -f ./myprint.so myprint && builtin myprint -f "%s\n" "Hello world!"'
+	@bash -xc 'enable -f ./myprint.so myprint && builtin myprint -f "%s\n" "Hello, world!"'
 
 .PHONY: clean
 clean:
