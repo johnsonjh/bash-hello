@@ -7,7 +7,7 @@
 
 #if defined(HAVE_UNISTD_H)
 # include <unistd.h>
-#endif /* if defined( HAVE_UNISTD_H ) */
+#endif
 
 #include <errno.h>
 #include <stdio.h>
@@ -24,7 +24,7 @@
 
 #if !defined(errno)
 extern int errno;
-#endif /* if !defined( errno ) */
+#endif
 
 int myprint_builtin();
 static int printargs();
@@ -54,7 +54,7 @@ myprint_struct =
   (char *)0
 };
 
-#ifndef ISOPTION
+#if !defined(ISOPTION)
 # define ISOPTION(s, c) (s[0] == '-' && s[2] == '\0' && s[1] == c)
 #endif /* ifndef ISOPTION */
 
@@ -169,7 +169,7 @@ printargs (WORD_LIST *list, FILE *ofp)
   int sawc;
 
   for (sawc = 0, l = list; l; l = l->next) {
-    ostr = ansicstr(l->word->word, strlen (l->word->word), 0, &sawc, (int *)0);
+    ostr = ansicstr(l->word->word, strlen(l->word->word), 0, &sawc, (int *)0);
 
     if (ostr)
       fprintf(ofp, "%s", ostr);
