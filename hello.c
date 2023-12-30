@@ -18,15 +18,17 @@
 #include "bash/builtins.h"
 #include "bash/shell.h"
 
-#include "bash/builtins/common.h"
 #include "bash/builtins/bashgetopt.h"
+#include "bash/builtins/common.h"
 
 int
 hello_builtin(WORD_LIST *list)
 {
   SHELL_VAR *greeting = find_variable("GREETING");
+
   if (greeting)
     printf ("%s\n", get_variable_value (greeting));
+
   return EXECUTION_SUCCESS;
 }
 
@@ -34,6 +36,7 @@ int
 hello_builtin_load(char *name)
 {
   bind_global_variable("GREETING", "Hello, world?", 0);
+
   return 1;
 }
 

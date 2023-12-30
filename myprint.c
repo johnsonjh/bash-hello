@@ -18,8 +18,8 @@
 #include "bash/builtins.h"
 #include "bash/shell.h"
 
-#include "bash/builtins/builtext.h"
 #include "bash/builtins/bashgetopt.h"
+#include "bash/builtins/builtext.h"
 #include "bash/builtins/common.h"
 
 #if !defined(errno)
@@ -29,8 +29,8 @@ extern int errno;
 int myprint_builtin(WORD_LIST *list);
 static int printargs(WORD_LIST *list, FILE *ofp);
 
-static FILE *ofp;
 extern char *this_command_name;
+static FILE *ofp;
 
 static char
 *myprint_doc[] =
@@ -61,14 +61,21 @@ myprint_struct =
 int
 myprint_builtin(WORD_LIST *list)
 {
-  int c, r, nflag, raw, ofd, sflag;
-  intmax_t lfd;
-  char *pfmt;
+  char      *pfmt;
+  int       c;
+  int       nflag;
+  int       ofd;
+  int       r;
+  int       raw;
+  int       sflag;
+  intmax_t  lfd;
   WORD_LIST *l;
 
-  nflag = raw = sflag = 0;
-  ofd = 1;
-  pfmt = 0;
+  ofd   = 1;
+  nflag = 0;
+  pfmt  = 0;
+  raw   = 0;
+  sflag = 0;
 
   reset_internal_getopt();
   while ((c = internal_getopt(list, "Rnprsu:f:")) != -1) {
@@ -110,7 +117,8 @@ myprint_builtin(WORD_LIST *list)
       case 'f':
         pfmt = list_optarg;
         break;
-        CASE_HELPOPT;
+
+      CASE_HELPOPT;
 
       default:
         builtin_usage();
@@ -127,9 +135,9 @@ opt_end:
     WORD_DESC *w;
     WORD_LIST *nlist;
 
-    w = make_word(pfmt);
-    nlist = make_word_list(w, list);
-    r = printf_builtin(nlist);
+    w           = make_word(pfmt);
+    nlist       = make_word_list(w, list);
+    r           = printf_builtin(nlist);
     nlist->next = (WORD_LIST *)NULL;
     dispose_words(nlist);
 
@@ -162,11 +170,11 @@ opt_end:
 }
 
 static int
-printargs (WORD_LIST *list, FILE *ofp)
+printargs(WORD_LIST *list, FILE *ofp)
 {
+  char      *ostr;
+  int       sawc;
   WORD_LIST *l;
-  char *ostr;
-  int sawc;
 
   for (sawc = 0, l = list; l; l = l->next) {
     ostr = ansicstr(l->word->word, strlen(l->word->word), 0, &sawc, (int *)0);
@@ -184,5 +192,5 @@ printargs (WORD_LIST *list, FILE *ofp)
       fprintf(ofp, " ");
   }
 
-  return 1;
+   return 1;
 }
