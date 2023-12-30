@@ -61,24 +61,18 @@ myprint_struct =
 int
 myprint_builtin(WORD_LIST *list)
 {
-  char      *pfmt;
+  char      *pfmt = 0;
   int       c;
-  int       nflag;
-  int       ofd;
+  int       nflag = 0;
+  int       ofd = 1;
   int       r;
-  int       raw;
-  int       sflag;
+  int       raw = 0;
   intmax_t  lfd;
   WORD_LIST *l;
 
-  ofd   = 1;
-  nflag = 0;
-  pfmt  = 0;
-  raw   = 0;
-  sflag = 0;
-
   reset_internal_getopt();
-  while ((c = internal_getopt(list, "Rnprsu:f:")) != -1) {
+
+  while ((c = internal_getopt(list, "Rnpru:f:")) != -1) {
     switch (c) {
       case 'R':
         raw = 2;
@@ -95,10 +89,6 @@ myprint_builtin(WORD_LIST *list)
 
       case 'n':
         nflag = 1;
-        break;
-
-      case 's':
-        sflag = 1;
         break;
 
       case 'p':
