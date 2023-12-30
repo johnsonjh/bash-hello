@@ -26,8 +26,8 @@
 extern int errno;
 #endif
 
-int myprint_builtin();
-static int printargs();
+int myprint_builtin(WORD_LIST *list);
+static int printargs(WORD_LIST *list, FILE *ofp);
 
 static FILE *ofp;
 extern char *this_command_name;
