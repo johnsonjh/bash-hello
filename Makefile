@@ -1,15 +1,20 @@
-INC := $(shell pkg-config --cflags bash 2> /dev/null || \
-               printf '%s\n' "-I/usr/include/bash/include")
+OS     := $(shell uname -s 2> /dev/null)
+CFLAGS := -O3 -fPIC -Wall
+SHARED := -shared
+INC    := $(shell pkg-config --cflags bash 2> /dev/null || \
+                  printf '%s\n' "-I/usr/include/bash/include")
+
+ifeq ($(OS),Darwin)
+  CFLAGS += -Wl,-undefined,dynamic_lookup
+endif
 
 all: hello.so myprint.so
 
 hello.so: hello.c
-	$(CC) $(INC) -O3 -Wall -shared -fPIC -o $@ $<
-	strip -s $@ 2> /dev/null && sstrip -z $@ 2> /dev/null || true
+	$(CC) $(INC) $(CFLAGS) $(SHARED) -o $@ $<
 
 myprint.so: myprint.c
-	$(CC) $(INC) -O3 -Wall -shared -fPIC -o $@ $<
-	strip -s $@ 2> /dev/null && sstrip -z $@ 2> /dev/null || true
+	$(CC) $(INC) $(CFLAGS) $(SHARED) -o $@ $<
 
 .PHONY: test
 test: hello.so myprint.so

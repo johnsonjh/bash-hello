@@ -1,1 +1,2 @@
-/hello.so
+*.so
+*.o
