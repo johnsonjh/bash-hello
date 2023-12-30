@@ -8,6 +8,7 @@ ifeq ($(OS),Darwin)
   CFLAGS += -Wl,-undefined,dynamic_lookup
 endif
 
+.PHONY: all
 all: hello.so myprint.so
 
 hello.so: hello.c
