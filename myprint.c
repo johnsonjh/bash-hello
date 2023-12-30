@@ -50,13 +50,13 @@ myprint_struct =
   myprint_builtin,
   BUILTIN_ENABLED,
   myprint_doc,
-  "myprint [-Rnprs] [-u unit] [-f format] [arguments]",
+  "myprint [-Rnpr] [-u unit] [-f format] [arguments]",
   (char *)0
 };
 
 #if !defined(ISOPTION)
 # define ISOPTION(s, c) (s[0] == '-' && s[2] == '\0' && s[1] == c)
-#endif /* ifndef ISOPTION */
+#endif
 
 int
 myprint_builtin(WORD_LIST *list)
@@ -64,9 +64,9 @@ myprint_builtin(WORD_LIST *list)
   char      *pfmt = 0;
   int       c;
   int       nflag = 0;
-  int       ofd = 1;
+  int       ofd   = 1;
   int       r;
-  int       raw = 0;
+  int       raw   = 0;
   intmax_t  lfd;
   WORD_LIST *l;
 
